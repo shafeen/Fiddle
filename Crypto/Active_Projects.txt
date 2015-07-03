@@ -1,0 +1,48 @@
+######################################################
+##                                                  ##
+##         A C T I V E  P R O J E C T S             ## 
+##                                                  ##
+######################################################
+
+Project # 1
+============
+
+Write a program which implements the method of 'fractionated
+Morse code'. Use a 0 for . (dot), 1 for (dash), and 2 for |
+(separator). Your program should be able to encrypt and decrypt
+files or plaintext from the keyboard.
+
+
+Notes:
+------
+
+International Morse Code: (key)
+-------------------------------
+
+Numbers:
+--------
+
+1 .----  6 -....
+2 ..---  7 --...
+3 ...--  8 ---..
+4 ....-  9 ----.
+5 .....  0 -----
+
+Letters:
+--------
+
+A .-     B -...
+C -.-.   D -..
+E .      F ..-.
+G --.    H ....
+I ..     J .---
+K -.-    L .-..
+M --     N -.
+O ---    P .--.
+Q --.-   R .-.
+S ...    T -
+U ..-    V ...-
+W .--    X -..-
+Y -.--   Z --..
+
+So an input of '01' (.-) should result in output = A.

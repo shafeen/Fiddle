@@ -1,0 +1,87 @@
+Item 1. Iterators
+
+Difficulty: 7
+
+Every programmer who uses the standard library has to be aware 
+of these common and not-so-common iterator mistakes. How many 
+of them can you find?
+
+The following program has at least four iterator-related problems.
+How many can you find?
+
+int main() 
+{
+	vector<Date> e;
+
+	copy( istream_iterator<Date>( cin ),
+	      istream_iterator<Date>(),
+	      back_inserter( e ) );
+	
+	vector<Date>::iterator first = find(e.begin(), e.end(), "01/01/95");
+	
+	vector<Date>::iterator last  = find(e.begin(), e.end(), "12/31/95");
+	
+	*last = "12/30/95"; 
+	
+    copy( first,
+		  last,
+		  ostream_iterator<Date>( cout, "\n" ) ); 
+	
+    e.insert( --e.end(), TodaysDate() );
+	
+    copy( first,
+	      last,
+	      ostream_iterator<Date>( cout, "\n" ) );
+}
+
+
+===============================================================================
+
+Problems:
+----------
+
+1. No checks if find() returned e.end(), assumes that element was found.
+   So in that case *last would be illegal if e.end() was returned.
+
+2. 2nd copy() won't print anything if first and last were both = e.end()
+   Also will have unknown errors if last < first from earlier finds.
+
+3. --e.end() could be illegal for reasons mentioned previously.
+
+4. e.insert() will fail if vector e is empty.
+
+
+
+
+
+Notes: (used)
+-------------
+
+vector<T>::insert(.., ..)
+copy(.., .., ..)
+find(.., .., ..)
+istream_iterator<T>(...)
+ostream_iterator<T>(...)
+back_inserter(..)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

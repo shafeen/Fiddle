@@ -1,0 +1,22 @@
+Item 2. Case-Insensitive Strings—Part 
+
+Difficulty: 7
+
+So you want a case-insensitive string class? Your mission, should you choose to accept it, is to write one.
+This Item is composed of three related points.
+
+1. What does "case-insensitive" mean?
+
+2. Write a ci_string class that is identical to the standard std::string class but that is case- insensitive in the same way as the commonly provided extension stricmp().[1] A ci_string should be usable as follows:
+[1] The stricmp() case-insensitive string comparison function is not part of the C or C++ standards, but it is a common extension on many C and C++ compilers.
+          ci_string s( "AbCdE" );
+          // case insensitive
+          //
+          assert( s == "abcde" );
+          assert( s == "ABCDE" );
+          // still case-preserving, of course
+          //
+          assert( strcmp( s.c_str(), "AbCdE" ) == 0 );
+          assert( strcmp( s.c_str(), "abcde" ) != 0 );
+
+3. Is making case sensitivity a property of the object a good idea?
