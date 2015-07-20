@@ -18,8 +18,7 @@ function genSentenceMarkup(sentenceFragments) {
         $sentence.append(" ");
     });
 
-    // append the generated sentence to the list
-    $("#sentence-list").append($sentence);
+    return $sentence.get(0);
 }
 
 function genAndAppendSentence() {
@@ -30,7 +29,9 @@ function genAndAppendSentence() {
     }
 
     var sentenceFragments = inputStr.split(" ");
-    genSentenceMarkup(sentenceFragments);
+
+    // append the generated sentence to the list
+    $("#sentence-list").append($(genSentenceMarkup(sentenceFragments)));
 }
 
 
@@ -43,6 +44,7 @@ $(document).ready(function() {
     $("#insert-blank-btn").on("click", function(e) {
         $("#gen-input").val($("#gen-input").val() + BLANK_TOKEN);
     });
+
 });
 
 
