@@ -31,7 +31,7 @@ public class TextFileIndexer {
     private boolean isTextFile(File file) {
         String filename = file.getName().toLowerCase();
         return filename.endsWith(".htm") || filename.endsWith(".html") ||
-                filename.endsWith(".xml") || filename.endsWith(".txt");
+                filename.endsWith(".xml") || filename.endsWith(".txt") || filename.endsWith(".json");
     }
 
     // add relevant files to our "queue" of files
@@ -67,7 +67,7 @@ public class TextFileIndexer {
             fr = new FileReader(f);
             doc.add(new TextField("contents", fr));
             doc.add(new StringField("path", f.getPath(), Field.Store.YES));
-            doc.add(new StringField("path", f.getName(), Field.Store.YES));
+            doc.add(new StringField("filename", f.getName(), Field.Store.YES));
 
             writer.addDocument(doc);
             System.out.println("Added :" + f);

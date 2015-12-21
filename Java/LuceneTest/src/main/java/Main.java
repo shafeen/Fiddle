@@ -13,6 +13,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.store.BufferedIndexInput;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
@@ -45,11 +46,16 @@ public class Main
         indexer.closeIndex();
 
         // now perform the search
+        performSearch(br, indexLocation);
+    }
+
+
+    public static void performSearch(BufferedReader br, String indexLocation) throws IOException, ParseException {
         IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(indexLocation)));
         IndexSearcher searcher = new IndexSearcher(reader);
         TopScoreDocCollector collector = TopScoreDocCollector.create(5, true);
 
-        buffer = "";
+        String buffer = "";
         while (!buffer.equalsIgnoreCase("q")) {
             System.out.println("Enter the search query (q=quit):");
             buffer = br.readLine();
@@ -70,7 +76,5 @@ public class Main
                 System.out.println((++i) + ". " + d.get("path") + " score=" + scoreDoc.score);
             }
         }
-
-
     }
 }
