@@ -21,12 +21,26 @@ import java.io.*;
 
 public class Main
 {
+    public static String getDefaultFileFolder() {
+        return Main.class.getResource("files/").getFile();
+    }
+
+    public static String getDefaultIndexFolder() {
+        return Main.class.getResource("indexes/").getFile();
+    }
+
 
     public static void main(String[] args) throws IOException, ParseException {
-        System.out.print("Enter the path where the index will be created: (e.g. /tmp/index or c:\\temp\\index): ");
+
+        System.out.println("Enter the path where the index will be created: (e.g. /tmp/index or c:\\temp\\index): ");
+        System.out.printf("(Default path: %s)\n", getDefaultIndexFolder());
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String buffer = br.readLine();
-        String indexLocation = buffer;
+        String indexLocation = buffer.equals("")? getDefaultIndexFolder() : buffer;
+        if (buffer.equals("")) {
+            System.out.println("Using default index folder.");
+        }
+
         // create the indexer
         TextFileIndexer indexer = new TextFileIndexer(indexLocation);
 
@@ -53,7 +67,6 @@ public class Main
     public static void performSearch(BufferedReader br, String indexLocation) throws IOException, ParseException {
         IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(indexLocation)));
         IndexSearcher searcher = new IndexSearcher(reader);
-        TopScoreDocCollector collector = TopScoreDocCollector.create(5, true);
 
         String buffer = "";
         while (!buffer.equalsIgnoreCase("q")) {
@@ -63,6 +76,7 @@ public class Main
                 break;
             }
 
+            TopScoreDocCollector collector = TopScoreDocCollector.create(5, true);
             Query query = new QueryParser(Version.LUCENE_40, "contents", TextFileIndexer.analyzer).parse(buffer);
             searcher.search(query, collector);
             ScoreDoc[] hits = collector.topDocs().scoreDocs;
@@ -75,6 +89,7 @@ public class Main
                 Document d = searcher.doc(docId);
                 System.out.println((++i) + ". " + d.get("path") + " score=" + scoreDoc.score);
             }
+
         }
     }
 }
