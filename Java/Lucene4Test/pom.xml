@@ -5,10 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>xyz.shafeen.test</groupId>
-    <artifactId>LuceneTest</artifactId>
+    <artifactId>Lucene4Test</artifactId>
     <version>1.0</version>
-
-
 
     <dependencies>
         <dependency>
@@ -30,6 +28,5 @@
         </dependency>
 
     </dependencies>
-
 
 </project>
