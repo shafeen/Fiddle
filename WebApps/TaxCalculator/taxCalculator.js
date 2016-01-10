@@ -49,8 +49,6 @@ var deductions = 24000;
 var taxableIncome = grossIncome - deductions;
 
 var incomeTaxOwedByBrackets = getTaxOwedByBrackets(taxableIncome, deductions, filingStatus);
-var incomeTaxOwedTotal = incomeTaxOwedByBrackets.reduce(function (p, c) {
-    return p + c;
-});
+var incomeTaxOwedTotal = incomeTaxOwedByBrackets.reduce(function(p,c) {return p+c;});
 
 var fedTaxOwedTotal = incomeTaxOwedTotal + getFicaSocialSecurityTax(grossIncome);
