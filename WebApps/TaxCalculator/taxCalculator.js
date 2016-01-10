@@ -42,13 +42,19 @@ function getFicaSocialSecurityTax(grossIncome) {
     return taxPercent*grossIncome;
 }
 
-// taxable income data
-var filingStatus = "marriedJointFiling";
-var grossIncome = 100000; // -> get this amt from user
-var deductions = 24000; // -> get this amt from user
-var taxableIncome = grossIncome - deductions;
-
-var incomeTaxOwedByBrackets = getTaxOwedByBrackets(taxableIncome, deductions, filingStatus);
-var incomeTaxOwedTotal = incomeTaxOwedByBrackets.reduce(function(p,c) {return p+c;});
-
-var fedTaxOwedTotal = incomeTaxOwedTotal + getFicaSocialSecurityTax(grossIncome);
+// intitiate all calculations to the Calculate button
+$(document).ready(function () {
+    $("#calculate-btn").click(function () {
+        var filingStatus = $("#filing-status").val();
+        // taxable income data
+        var grossIncome = $("#gross-income").val();
+        var deductions = $("#deductions").val();
+        var incomeTaxOwedByBrackets = getTaxOwedByBrackets(grossIncome - deductions, deductions, filingStatus);
+        var incomeTaxOwedTotal = incomeTaxOwedByBrackets.reduce(function(p,c) {return p+c;});
+        var ficaSocialSecurityTax = getFicaSocialSecurityTax(grossIncome);
+        $("#fed-income-taxes-owed").val(incomeTaxOwedTotal);
+        $("#fica-soc-taxes-owed").val(ficaSocialSecurityTax);
+        var fedTaxOwedTotal = incomeTaxOwedTotal + ficaSocialSecurityTax;
+        $("#net-income").val(grossIncome - fedTaxOwedTotal);
+    });
+});
