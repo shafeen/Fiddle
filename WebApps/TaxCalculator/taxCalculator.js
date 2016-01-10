@@ -42,7 +42,7 @@ function getFicaSocialSecurityTax(grossIncome) {
     return taxPercent*grossIncome;
 }
 
-// intitiate all calculations to the Calculate button
+// initiate all calculations to the Calculate button
 $(document).ready(function () {
     $("#calculate-btn").click(function () {
         var filingStatus = $("#filing-status").val();
