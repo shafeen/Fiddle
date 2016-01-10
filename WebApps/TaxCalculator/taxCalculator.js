@@ -44,8 +44,8 @@ function getFicaSocialSecurityTax(grossIncome) {
 
 // taxable income data
 var filingStatus = "marriedJointFiling";
-var grossIncome = 70000;
-var deductions = 24000;
+var grossIncome = 100000; // -> get this amt from user
+var deductions = 24000; // -> get this amt from user
 var taxableIncome = grossIncome - deductions;
 
 var incomeTaxOwedByBrackets = getTaxOwedByBrackets(taxableIncome, deductions, filingStatus);
