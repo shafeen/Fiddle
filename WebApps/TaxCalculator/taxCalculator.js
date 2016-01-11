@@ -48,8 +48,8 @@ $(document).ready(function () {
         var filingStatus = $("#filing-status").val();
         // taxable income data
         var grossIncome = $("#gross-income").val();
-        var deductions = $("#deductions").val();
-        var incomeTaxOwedByBrackets = getTaxOwedByBrackets(grossIncome - deductions, deductions, filingStatus);
+        var fedDeductions = $("#fed-deductions").val();
+        var incomeTaxOwedByBrackets = getTaxOwedByBrackets(grossIncome - fedDeductions, fedDeductions, filingStatus);
         var incomeTaxOwedTotal = incomeTaxOwedByBrackets.reduce(function(p,c) {return p+c;});
         var ficaSocialSecurityTax = getFicaSocialSecurityTax(grossIncome);
         $("#fed-income-taxes-owed").val(incomeTaxOwedTotal);
