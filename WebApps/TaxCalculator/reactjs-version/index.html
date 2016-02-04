@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tax Calculator SPA (ReactJS)</title>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+    <script type="text/babel">
+        var LabeledNumberInput = React.createClass({
+            render: function() {
+                return (
+                    <div>
+                        <label for="{this.props.id}">{this.props.label}</label>
+                        <input id="{this.props.id}" type="number"/>
+                    </div>
+                );
+            }
+        });
+
+        // TODO: complete this
+        ReactDOM.render(
+            <div>
+                <LabeledNumberInput id="gross-income" label="Gross Income $" />
+                <LabeledNumberInput id="fed-deductions" label="Fed Deductions $" />
+            </div>,
+            document.getElementById("container")
+        );
+    </script>
+</body>
+</html>
