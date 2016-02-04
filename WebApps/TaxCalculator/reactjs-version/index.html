@@ -14,10 +14,12 @@
     <script type="text/babel">
         var LabeledNumberInput = React.createClass({
             render: function() {
+                var d = (this.props.disabled == "y")? true : false;
+
                 return (
                     <div>
-                        <label for="{this.props.id}">{this.props.label}</label>
-                        <input id="{this.props.id}" type="number"/>
+                        <label for={this.props.id}>{this.props.label}</label>
+                        <input id={this.props.id} type="number" disabled={d}/>
                     </div>
                 );
             }
@@ -26,8 +28,17 @@
         // TODO: complete this
         ReactDOM.render(
             <div>
+                <h2>Calculation</h2>
                 <LabeledNumberInput id="gross-income" label="Gross Income $" />
                 <LabeledNumberInput id="fed-deductions" label="Fed Deductions $" />
+
+                <hr/>
+
+                <h2>Summary</h2>
+                <LabeledNumberInput id="fed-tax-owed" label="Fed Income Taxes Owed $" disabled="y" />
+                <LabeledNumberInput id="fica-tax-owed" label="FICA/Social Security Owed $" disabled="y" />
+                <LabeledNumberInput id="net-income" label="Net Income $" disabled="y" />
+
             </div>,
             document.getElementById("container")
         );
