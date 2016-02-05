@@ -29,6 +29,7 @@ var LabeledNumberInput = React.createClass({
 });
 
 // TODO: complete this
+// TODO: read up on Flux architectural pattern
 ReactDOM.render(
     <div>
         <h2>Calculation</h2>
@@ -41,14 +42,14 @@ ReactDOM.render(
         ]}/>
         <LabeledNumberInput id="gross-income" label="Gross Income $" />
         <LabeledNumberInput id="fed-deductions" label="Fed Deductions $" />
+        <button id="calculate-btn">Calculate</button>
 
         <hr/>
 
         <h2>Summary</h2>
-        <LabeledNumberInput id="fed-tax-owed" label="Fed Income Taxes Owed $" disabled="y" />
-        <LabeledNumberInput id="fica-tax-owed" label="FICA/Social Security Owed $" disabled="y" />
+        <LabeledNumberInput id="fed-income-taxes-owed" label="Fed Income Taxes Owed $" disabled="y" />
+        <LabeledNumberInput id="fica-soc-taxes-owed" label="FICA/Social Security Owed $" disabled="y" />
         <LabeledNumberInput id="net-income" label="Net Income $" disabled="y" />
-
     </div>,
     document.getElementById("container")
 );
