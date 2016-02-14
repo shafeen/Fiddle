@@ -38,6 +38,14 @@ var LabeledNumberInput = React.createClass({
 });
 
 var TaxCalculator = React.createClass({
+    getInitialState: function () {
+        return {
+            filingStatus: "single",
+            grossIncome: 0,
+            fedDeductions: 0
+        }
+    },
+
     render: function () {
         return (
             <div>
@@ -58,6 +66,14 @@ var TaxCalculator = React.createClass({
 });
 
 var TaxSummary = React.createClass({
+    getInitialState: function () {
+        return {
+            totalIncomeTaxOwed: 0,
+            ficaSocialSecurityTax: 0,
+            netIncome: 0
+        }
+    },
+
     render: function () {
         return (
             <div>
