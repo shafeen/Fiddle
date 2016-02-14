@@ -160,7 +160,6 @@ var TaxSummary = React.createClass({
     }
 });
 
-// TODO: complete this
 // TODO: read up on Flux architectural pattern
 // TODO: read up on Redux architectural pattern
 ReactDOM.render(
