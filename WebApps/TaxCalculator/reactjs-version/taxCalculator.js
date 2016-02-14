@@ -57,6 +57,19 @@ var TaxCalculator = React.createClass({
     }
 });
 
+var TaxSummary = React.createClass({
+    render: function () {
+        return (
+            <div>
+                <h2>Summary</h2>
+                <LabeledNumberInput id="fed-income-taxes-owed" label="Fed Income Taxes Owed $" disabled="y" />
+                <LabeledNumberInput id="fica-soc-taxes-owed" label="FICA/Social Security Owed $" disabled="y" />
+                <LabeledNumberInput id="net-income" label="Net Income $" disabled="y" />
+            </div>
+        );
+    }
+});
+
 // TODO: complete this
 // TODO: read up on Flux architectural pattern
 // TODO: read up on Redux architectural pattern
@@ -64,10 +77,7 @@ ReactDOM.render(
     <div>
         <TaxCalculator />
         <hr/>
-        <h2>Summary</h2>
-        <LabeledNumberInput id="fed-income-taxes-owed" label="Fed Income Taxes Owed $" disabled="y" />
-        <LabeledNumberInput id="fica-soc-taxes-owed" label="FICA/Social Security Owed $" disabled="y" />
-        <LabeledNumberInput id="net-income" label="Net Income $" disabled="y" />
+        <TaxSummary />
     </div>,
     document.getElementById("container")
 );
