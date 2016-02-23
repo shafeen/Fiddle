@@ -31,3 +31,20 @@ function mustacheBasicHtmlFromFile() {
     ];
     echo $mustacheFileLoader->render($templateFileName, $basicValues);
 }
+
+function mustacheAdvancedHtmlFromFile() {
+    $mustacheFileLoader = new Mustache_Engine([
+        'loader' => new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/')
+    ]);
+    $templateFileName = 'advanced'; // .mustache appended automatically
+    $basicValues = [
+        'title' => 'a basic title',
+        'paragraphs' => [
+            ['text' => 'This is the first paragraph.'],
+            ['text' => 'This is paragraph two.'],
+            ['text' => 'This is paragraph tres.'],
+            ['text' => 'This is the tetris of paragraphs.']
+        ]
+    ];
+    echo $mustacheFileLoader->render($templateFileName, $basicValues);
+}
