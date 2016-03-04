@@ -1,0 +1,6 @@
+{
+    "name": "shafeen/fiddle",
+    "require": {
+        "phpunit/phpunit": "4.8.*"
+    }
+}
