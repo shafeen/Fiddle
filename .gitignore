@@ -1,2 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
-.idea/*
+.idea/
+*.iml
+
+# composer files
+composer.lock
+vendor/
