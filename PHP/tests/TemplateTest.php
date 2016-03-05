@@ -9,6 +9,6 @@ class TemplateTest extends PHPUnit_Framework_TestCase
         ]);
         $templateFileName = 'hello'; // .mustache appended automatically
         $values = ['planet' => 'World!'];
-        $this->assertEquals('Hello World!', $mustacheFileLoader->render($templateFileName, $values))
+        $this->assertEquals('Hello World!', $mustacheFileLoader->render($templateFileName, $values));
     }
 }
