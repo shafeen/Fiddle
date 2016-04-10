@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ScrollingContentLoader</title>
+    <style>
+        .grid {
+            min-width: 800px;
+            width: 75%;
+            margin-left: 10%;
+            margin-right: 10%;
+            border: 1px solid hsla(0, 0%, 0%, 0.5);
+        }
+        .grid-item {
+            float: left;
+            width: 158px;
+            height: 58px;
+            border: 1px solid hsla(0, 0%, 0%, 0.5);
+        }
+        .grid-item--width2 { width: 158px; }
+        .grid-item--height2 { height: 118px; }
+        .grid-item--height3 { height: 88px; }
+    </style>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/masonry/dist/masonry.pkgd.min.js"></script>
+</head>
+<body>
+    <div class="grid">
+        <div class="grid-item grid-item--width2">
+            <p>content</p>
+        </div>
+        <div class="grid-item grid-item--height2">
+            <p>content</p>
+        </div>
+        <div class="grid-item grid-item--height3">
+            <p>content</p>
+        </div>
+        <div class="grid-item grid-item--height2">
+            <button id="wide">Add small</button><br/>
+            <button id="tall1">Add tall</button><br/>
+            <button id="tall2">Add medium</button>
+        </div>
+    </div>
+
+    <!-- The next page which content will be loaded when scrolled -->
+<!--    <nav id="pagination">-->
+<!--        <p><a href="page-2.html">Page 2</a></p>-->
+<!--    </nav>-->
+
+    <script>
+        $(document).ready(function () {
+            var $grid = $('.grid');
+            var $item1= $grid.find('div').eq(0).clone();
+            var $item2= $grid.find('div').eq(1).clone();
+            var $item3= $grid.find('div').eq(2).clone();
+
+            $('button#wide').click(function (e) {
+                var $newItem = $item1.clone();
+                $grid.masonry().append($newItem).masonry('appended', $newItem);
+            });
+
+            $('button#tall1').click(function (e) {
+                var $newItem = $item2.clone();
+                $grid.masonry().append($newItem).masonry('appended', $newItem);
+            });
+
+            $('button#tall2').click(function (e) {
+                var $newItem = $item3.clone();
+                $grid.masonry().append($newItem).masonry('appended', $newItem);
+            });
+        });
+    </script>
+</body>
+</html>
