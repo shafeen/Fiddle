@@ -1,14 +1,7 @@
 #!/usr/bin/env python
 import pika
 from pika.exceptions import AMQPConnectionError
-
-
-def get_host_and_port():
-    host = raw_input("hostname: ")
-    host = host if host != '' else 'localhost'
-    port = raw_input("port: ")
-    port = int(port) if port != '' else 5672
-    return [host, port]
+from rabbitmq_util import get_host_and_port
 
 try:
     # TODO: use "click" decorators for this
