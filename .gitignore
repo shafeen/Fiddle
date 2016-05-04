@@ -1,3 +1,6 @@
+bower_components/
+node_modules/
+
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 *.iml
@@ -5,3 +8,8 @@
 # composer files
 composer.lock
 vendor/
+
+# general files to ignore
+*.pyc
+*.out
+
