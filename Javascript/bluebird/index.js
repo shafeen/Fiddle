@@ -84,11 +84,8 @@ function getNumUsers(dbPath) {
         var db = new sqlite3.Database(dbPath);
         db.serialize(function () {
             db.get('SELECT count(*) AS totalusers FROM users', function (err, row) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(err, row.totalusers);
-                }
+                var totalusers = row? row.totalusers: null;
+                callback(err, totalusers);
             });
         });
         db.close();
@@ -108,11 +105,8 @@ function insertNewUser(dbPath, username) {
         var db = new sqlite3.Database(dbPath);
         db.serialize(function () {
             db.run('INSERT INTO users (name) VALUES (?)', username, function (err) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(err, this.lastID);
-                }
+                var lastId = (!err)? this.lastID: null;
+                callback(err, lastId);
             });
         });
         db.close();
