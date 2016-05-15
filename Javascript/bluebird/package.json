@@ -1,0 +1,19 @@
+{
+  "name": "bluebird-test-project",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "restart": "cat setup.sql | sqlite3 test.db; nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shafeen M.",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "express": "^4.13.4",
+    "nodemon": "^1.9.2",
+    "sqlite3": "^3.1.3"
+  }
+}

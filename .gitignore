@@ -12,4 +12,5 @@ vendor/
 # general files to ignore
 *.pyc
 *.out
+test.db
 
