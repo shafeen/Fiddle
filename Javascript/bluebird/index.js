@@ -71,6 +71,53 @@ function adduserNew(username, res, callback) {
     db.close();
 }
 
+app.get('/numusers/', function (req, res) {
+    getNumUsers('./test.db').then(function(numusers) {
+        res.send(numusers + ' users');
+    }).catch(function (e) {
+        res.status(500).send('server error');
+    });
+});
+
+function getNumUsers(dbPath) {
+    return (Promise.promisify(function (dbPath, callback) {
+        var db = new sqlite3.Database(dbPath);
+        db.serialize(function () {
+            db.get('SELECT count(*) AS totalusers FROM users', function (err, row) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(err, row.totalusers);
+                }
+            });
+        });
+        db.close();
+    }))(dbPath);
+}
+
+app.get('/insertuser/', function (req, res) {
+    insertNewUser('./test.db', req.query.username).then(function (userId) {
+        res.send('inserted new user with id = ' + userId);
+    }).catch(function (err) {
+        res.status(500).send('server could not insert user');
+    });
+});
+
+function insertNewUser(dbPath, username) {
+    return Promise.promisify(function (dbPath, username, callback) {
+        var db = new sqlite3.Database(dbPath);
+        db.serialize(function () {
+            db.run('INSERT INTO users (name) VALUES (?)', username, function (err) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(err, this.lastID);
+                }
+            });
+        });
+        db.close();
+    })(dbPath, username);
+}
 
 app.listen(3000, function () {
     console.log('bluebird test app listening on port 3000!');
