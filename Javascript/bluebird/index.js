@@ -9,108 +9,70 @@ app.get('/', function (req, res) {
     res.send(msg);
 });
 
-app.get('/adduser/new/promises/', function (req, res) {
-    Promise.promisify(adduserNew)(req.query.username, res).then(function(val) {
-        console.log('responding');
-        res.json(val);
-    }).catch(function (e) {
-        console.log('erroring');
-        res.status(500).json(e);
+app.get('/adduser/', function (req, res) {
+    adduser(req.query.username).then(function (responseObj) {
+        res.status(201).json(responseObj);
+    }).catch(function (responseObj) {
+        res.status(500).json(responseObj);
     });
 });
 
-app.get('/adduser/old/', function (req, res) {
-    adduserOld(req.query.username, res);
-});
-
-app.get('/adduser/new/', function (req, res) {
-    adduserNew(req.query.username, res);
-});
-
-function adduserOld(username, res) {
-    console.log('adduserOld');
-    var db = new sqlite3.Database('./test.db');
-    db.serialize(function () {
-        db.get('SELECT count(*) AS totalusers FROM users', function (err, row) {
-            var responseObj = {};
-            responseObj.totalUsersBefore = row.totalusers;
-            responseObj.message = 'No user added.';
-            var db = new sqlite3.Database('./test.db');
-            db.run('INSERT INTO users (name) VALUES (?)', username, function (err) {
-                responseObj.message = 'New user added.';
-                res.json(responseObj);
+function adduser(username) {
+    return new Promise(function (resolve, reject) {
+        getNumUsers('./test.db').then(function (currentNumUsers) {
+            insertNewUser('./test.db', username).then(function (newUserId) {
+                resolve({
+                    message: 'new user added',
+                    previousNumUsers: currentNumUsers,
+                    user: {
+                        id: newUserId,
+                        name: username
+                    }
+                });
+            }).catch(function (err) {
+                reject({
+                    message: 'could not add a new user',
+                    previousNumUsers: currentNumUsers
+                });
             });
-            db.close();
+        }).catch(function (err) {
+            reject({
+                message: 'could not check current number of users'
+            });
         });
     });
-    db.close();
 }
-
-// NOTE: excluding error handling to compare with adduserOld(..)
-function adduserNew(username, res, callback) {
-    console.log('adduserNew');
-    callback = callback? callback : res.json;
-    var db = new sqlite3.Database('./test.db');
-    db.get = Promise.promisify(db.get);
-    db.serialize(function () {
-        db.get('SELECT count(*) totalusers FROM users').then(function (row) {
-            var responseObj = {};
-            responseObj.totalUsersBefore = row.totalusers;
-            responseObj.message = 'No user added.';
-            return responseObj;
-        }).then(function (responseObj){
-            var db = new sqlite3.Database('./test.db');
-            db.run = Promise.promisify(db.run);
-            db.run('INSERT INTO users (name) VALUES (?)', username).then(function () {
-                responseObj.message = 'New user added.';
-                callback(responseObj);
-            });
-            db.close();
-        });
-    });
-    db.close();
-}
-
-app.get('/numusers/', function (req, res) {
-    getNumUsers('./test.db').then(function(numusers) {
-        res.send(numusers + ' users');
-    }).catch(function (e) {
-        res.status(500).send('server error');
-    });
-});
 
 function getNumUsers(dbPath) {
-    return (Promise.promisify(function (dbPath, callback) {
+    return new Promise(function (resolve, reject) {
         var db = new sqlite3.Database(dbPath);
         db.serialize(function () {
             db.get('SELECT count(*) AS totalusers FROM users', function (err, row) {
-                var totalusers = row? row.totalusers: null;
-                callback(err, totalusers);
+                if (row) {
+                    resolve(row.totalusers);
+                } else {
+                    reject(err);
+                }
             });
         });
         db.close();
-    }))(dbPath);
+    });
 }
 
-app.get('/insertuser/', function (req, res) {
-    insertNewUser('./test.db', req.query.username).then(function (userId) {
-        res.send('inserted new user with id = ' + userId);
-    }).catch(function (err) {
-        res.status(500).send('server could not insert user');
-    });
-});
-
 function insertNewUser(dbPath, username) {
-    return Promise.promisify(function (dbPath, username, callback) {
+    return new Promise(function (resolve, reject) {
         var db = new sqlite3.Database(dbPath);
         db.serialize(function () {
             db.run('INSERT INTO users (name) VALUES (?)', username, function (err) {
-                var lastId = (!err)? this.lastID: null;
-                callback(err, lastId);
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(this.lastID);
+                }
             });
         });
         db.close();
-    })(dbPath, username);
+    });
 }
 
 app.listen(3000, function () {
