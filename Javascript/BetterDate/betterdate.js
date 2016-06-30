@@ -30,7 +30,7 @@ function initToNextDayFunctions() {
     for (day in dateNumMap) {
         if (dateNumMap.hasOwnProperty(day)) {
             Date.prototype['toNext'+day] = function () {
-                this.toNextSpecifiedDay(day);
+                this.toNextSpecifiedDay(dateNumMap[day]);
             }
         }
     }
