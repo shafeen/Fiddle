@@ -26,16 +26,30 @@ var dateNumMap = {
     Saturday: 6
 };
 
-function initToNextDayFunctions() {
-    for (day in dateNumMap) {
-        if (dateNumMap.hasOwnProperty(day)) {
-            Date.prototype['toNext'+day] = function () {
-                this.toNextSpecifiedDay(dateNumMap[day]);
-            }
-        }
-    }
-}
-initToNextDayFunctions();
+Date.prototype.toNextSunday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Sunday);
+};
+Date.prototype.toNextMonday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Monday);
+};
+Date.prototype.toNextTuesday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Tuesday);
+};
+Date.prototype.toNextWednesday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Wednesday);
+};
+Date.prototype.toNextThursday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Thursday);
+};
+Date.prototype.toNextThursday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Thursday);
+};
+Date.prototype.toNextFriday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Friday);
+};
+Date.prototype.toNextSaturday = function () {
+    this.toNextSpecifiedDay(dateNumMap.Saturday);
+};
 
 Date.prototype.toNextSpecifiedDay = function (day) {
     if (day >= 0 && day <= 6) {
