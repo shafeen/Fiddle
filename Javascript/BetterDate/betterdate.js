@@ -27,13 +27,13 @@ var dateNumMap = {
 };
 
 function initToNextDayFunctions() {
-	for (day in dateNumMap) {
-		if (dateNumMap.hasOwnProperty(day)) {
-			Date.prototype['toNext'+day] = function () {
-				this.toNextSpecifiedDay(day);
-			}
-		}
-	}
+    for (day in dateNumMap) {
+        if (dateNumMap.hasOwnProperty(day)) {
+            Date.prototype['toNext'+day] = function () {
+                this.toNextSpecifiedDay(day);
+            }
+        }
+    }
 }
 initToNextDayFunctions();
 
