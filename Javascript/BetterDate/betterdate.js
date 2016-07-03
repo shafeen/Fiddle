@@ -16,6 +16,12 @@ Date.prototype.moveDate = function (num) {
     }
 };
 
+Date.prototype.moveYear = function (num) {
+    if (!isNaN(num)) {
+        this.setFullYear(this.getFullYear() + parseInt(num));
+    }
+};
+
 var dateNumMap = {
     Sunday: 0,
     Monday: 1,
