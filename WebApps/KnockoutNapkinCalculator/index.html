@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Napkin Calculator</title>
+    <script src="scripts/knockout-3.4.0.js"></script>
+</head>
+<body>
+
+    <h2> Prototype Napkin Calculator for Real Estate </h2>
+
+    <div>
+        <p>Purchase price: <input data-bind="value: propertyPrice" /></p>
+        <p>Expected rent: <input data-bind="value: expectedRent" /></p>
+        <p>Expected HOA: <input data-bind="value: expectedHOA" /></p>
+        <p>Expected Home Insurance: <input data-bind="value: expectedInsurance" /></p>
+        <p>Expected Prop Taxes: <input data-bind="value: expectedPropTaxes" /></p>
+        <!--<p>: <input data-bind="value: " /></p>-->
+        <!--<p>: <strong data-bind="text: "></strong></p>-->
+
+    </div>
+    <script>
+        function getMonthlyMortgagePayment(principal, interestPct, years) {
+            var i = interestPct/1200;
+            var n = years*12;
+            return principal*(i*(Math.pow((1+i),n)))/(Math.pow((1+i),n)-1);
+        }
+
+        function AppViewModel() {
+            this.propertyPrice = ko.observable(100000);
+            this.expectedRent = ko.observable(1000);
+            this.expectedHOA = ko.observable(200);
+            this.expectedInsurance = ko.observable(70);
+            this.expectedPropTaxes = ko.observable(100);
+            this.downPaymentPct = 0.21;
+            this.interestPct = 4.2;
+            this.loanDurationInYears = 30;
+
+            this.managementCost = ko.computed(function () {
+                return this.expectedRent*.1;
+            }, this);
+            this.repairFund = ko.computed(function () {
+                return this.expectedRent*.06;
+            }, this);
+            this.mortgagePayment = ko.computed(function () {
+                return getMonthlyMortgagePayment(this.propertyPrice*(1-this.downPaymentPct),
+                        this.interestPct,
+                        this.loanDurationInYears);
+            }, this)
+        }
+
+        ko.applyBindings(new AppViewModel());
+    </script>
+
+</body>
+</html>
