@@ -10,23 +10,25 @@
     <h2> Prototype Napkin Calculator for Real Estate </h2>
 
     <div>
-        <p>Purchase price: <input data-bind="value: propertyPrice" /></p>
-        <p>Expected rent: <input data-bind="value: expectedRent" /></p>
-        <p>Expected HOA: <input data-bind="value: expectedHOA" /></p>
-        <p>Expected Home Insurance: <input data-bind="value: expectedInsurance" /></p>
-        <p>Expected Prop Taxes: <input data-bind="value: expectedPropTaxes" /></p>
+        <p>Purchase price: $<input data-bind="value: propertyPrice" /></p>
+        <p>Expected rent: $<input data-bind="value: expectedRent" /></p>
+        <p>Expected HOA: $<input data-bind="value: expectedHOA" /></p>
+        <p>Expected Home Insurance: $<input data-bind="value: expectedInsurance" /></p>
+        <p>Expected Prop Taxes: $<input data-bind="value: expectedPropTaxes" /></p>
         <p>Expected Vacancy Rate: <input data-bind="value: expectedVacancyPct" /></p>
         <!--<p>: <input data-bind="value: " /></p>-->
         <!--<p>: <strong data-bind="text: "></strong></p>-->
         <p>Down Payment (21%): <strong data-bind="text: downPaymentAmt"></strong></p>
         <p>Mortgage: <strong data-bind="text: mortgagePayment"></strong></p>
         <p>Management: <strong data-bind="text: managementCost"></strong></p>
-        <p>Repair fund: <strong data-bind="text: repairFund"></strong></p>
-        <p>Vacancies: <strong data-bind="text: vacancyAllowance"></strong></p>
+        <p>Repair fund
+            (<span data-bind="text: repairFundPct"></span>% repair +
+            <span data-bind="text: capExPct"></span>% capEx): <strong data-bind="text: repairFund"></strong></p>
+        <p>Vacancy fund: <strong data-bind="text: vacancyAllowance"></strong></p>
 
         <p>Cash Flow: <strong data-bind="text: cashFlow"></strong></p>
         <p>Net Annual Income: <strong data-bind="text: netAnnualIncome"></strong></p>
-        <p>Cash on Cash Return: <strong data-bind="text: cashOnCashReturn"></strong></p>
+        <p>Cash on Cash Return: <strong data-bind="text: cashOnCashReturn"></strong>%</p>
         <p>Initial investment doubles approx every <strong data-bind="text: doublerYears"></strong> years!</p>
 
 
@@ -39,16 +41,19 @@
             return (principal*(i*(Math.pow((1+i),n)))/(Math.pow((1+i),n)-1));
         }
 
-        function AppViewModel() {
+        function CalculatorAppViewModel() {
             this.propertyPrice = ko.observable(100000);
             this.expectedRent = ko.observable(1000);
             this.expectedHOA = ko.observable(200);
             this.expectedInsurance = ko.observable(70);
             this.expectedPropTaxes = ko.observable(100);
             this.expectedVacancyPct = ko.observable(10);
+            this.repairFundPct = ko.observable(5);
+            this.capExPct = ko.observable(5);
             this.downPaymentPct = ko.observable(0.21);
             this.interestPct = 4.2;
             this.loanDurationInYears = 30;
+
 
             this.downPaymentAmt = ko.computed(function () {
                 return this.downPaymentPct()*this.propertyPrice();
@@ -62,8 +67,8 @@
             this.managementCost = ko.computed(function () {
                 return this.expectedRent()*.1;
             }, this);
-            this.repairFund = ko.computed(function () {
-                return this.expectedRent()*.1; // includes 5% capEx
+            this.repairFund = ko.computed(function () { // includes repair fund + capEx
+                return this.expectedRent()*((this.repairFundPct()+this.capExPct())/100);
             }, this);
             this.vacancyAllowance = ko.computed(function () {
                 return this.expectedRent()*this.expectedVacancyPct()/100;
@@ -85,11 +90,11 @@
                 return this.netAnnualIncome()*100 / this.downPaymentAmt();
             }, this);
             this.doublerYears = ko.computed(function () {
-                return parseInt(72/this.cashOnCashReturn());
+                return Math.ceil(72/this.cashOnCashReturn());
             }, this)
         }
 
-        ko.applyBindings(new AppViewModel());
+        ko.applyBindings(new CalculatorAppViewModel());
     </script>
 
 </body>
