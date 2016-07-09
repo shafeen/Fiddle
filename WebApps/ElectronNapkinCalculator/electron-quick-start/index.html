@@ -83,16 +83,20 @@
     function getMonthlyMortgagePayment(principal, interestPct, years) {
         var i = interestPct/1200;
         var n = years*12;
-        return (principal*(i*(Math.pow((1+i),n)))/(Math.pow((1+i),n)-1));
+        return roundTo2Dp((principal*(i*(Math.pow((1+i),n)))/(Math.pow((1+i),n)-1)));
+    }
+
+    function roundTo2Dp(num) {
+        return Math.round(num*100)/100;
     }
 
     function CalculatorAppViewModel() {
         this.propertyPrice = ko.observable(100000);
-        this.expectedRent = ko.observable(1000);
-        this.expectedHOA = ko.observable(200);
+        this.expectedRent = ko.observable(1100);
+        this.expectedHOA = ko.observable(150);
         this.expectedInsurance = ko.observable(70);
-        this.expectedPropTaxes = ko.observable(100);
-        this.expectedVacancyPct = ko.observable(10);
+        this.expectedPropTaxes = ko.observable(90);
+        this.expectedVacancyPct = ko.observable(8.34);
         this.repairFundPct = ko.observable(5);
         this.capExPct = ko.observable(5);
         this.downPaymentPct = ko.observable(21);
@@ -117,20 +121,20 @@
             return this.expectedRent()*this.expectedVacancyPct()/100;
         }, this);
         this.cashFlow = ko.computed(function () {
-            return this.expectedRent()
+            return roundTo2Dp(this.expectedRent()
               - this.expectedHOA()
               - this.managementCost()
               - this.repairFund()
               - this.expectedInsurance()
               - this.expectedPropTaxes()
               - this.mortgagePayment()
-              - this.vacancyAllowance();
+              - this.vacancyAllowance());
         }, this);
         this.netAnnualIncome = ko.computed(function () {
             return this.cashFlow()*12;
         }, this);
         this.cashOnCashReturn = ko.computed(function () {
-            return this.netAnnualIncome()*100 / this.downPaymentAmt();
+            return roundTo2Dp(this.netAnnualIncome()*100 / this.downPaymentAmt());
         }, this);
         this.doublerYears = ko.computed(function () {
             return Math.ceil(72/this.cashOnCashReturn());
