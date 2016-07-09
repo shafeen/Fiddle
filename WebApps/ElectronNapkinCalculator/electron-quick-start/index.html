@@ -83,11 +83,12 @@
     function getMonthlyMortgagePayment(principal, interestPct, years) {
         var i = interestPct/1200;
         var n = years*12;
-        return roundTo2Dp((principal*(i*(Math.pow((1+i),n)))/(Math.pow((1+i),n)-1)));
+        return roundToDp((principal*(i*(Math.pow((1+i),n)))/(Math.pow((1+i),n)-1)), 2);
     }
 
-    function roundTo2Dp(num) {
-        return Math.round(num*100)/100;
+    function roundToDp(num, numDp) {
+        var factor = Math.pow(10, parseInt(numDp));
+        return Math.round(num*factor)/factor;
     }
 
     function CalculatorAppViewModel() {
@@ -121,20 +122,20 @@
             return this.expectedRent()*this.expectedVacancyPct()/100;
         }, this);
         this.cashFlow = ko.computed(function () {
-            return roundTo2Dp(this.expectedRent()
+            return roundToDp(this.expectedRent()
               - this.expectedHOA()
               - this.managementCost()
               - this.repairFund()
               - this.expectedInsurance()
               - this.expectedPropTaxes()
               - this.mortgagePayment()
-              - this.vacancyAllowance());
+              - this.vacancyAllowance(), 2);
         }, this);
         this.netAnnualIncome = ko.computed(function () {
-            return this.cashFlow()*12;
+            return roundToDp(this.cashFlow()*12, 2);
         }, this);
         this.cashOnCashReturn = ko.computed(function () {
-            return roundTo2Dp(this.netAnnualIncome()*100 / this.downPaymentAmt());
+            return roundToDp(this.netAnnualIncome()*100 / this.downPaymentAmt(), 2);
         }, this);
         this.doublerYears = ko.computed(function () {
             return Math.ceil(72/this.cashOnCashReturn());
