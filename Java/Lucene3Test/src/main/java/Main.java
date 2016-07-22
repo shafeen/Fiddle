@@ -14,13 +14,14 @@ import java.io.*;
 
 public class Main
 {
-    public static String indexPath = "D:\\Personal\\Code\\Fiddle\\Java\\Lucene3Test\\src\\main\\resources\\indexes";
-    public static String filesPath = "D:\\Personal\\Code\\Fiddle\\Java\\Lucene3Test\\src\\main\\resources\\files";
+    // NOTE: paths relative to the maven "resources/" folder
+    public static String indexPath = "/indexes";
+    public static String filesPath = "/files";
 
     public static void indexFiles() throws IOException {
         System.out.println("Creating index at " + indexPath);
-        Indexer indexer = new Indexer(indexPath);
-        indexer.indexFiles(filesPath, new FileFilter() {
+        Indexer indexer = new Indexer(Main.class.getResource(indexPath).getPath());
+        indexer.indexFiles(Main.class.getResource(filesPath).getPath(), new FileFilter() {
             public boolean accept(File file) {
                 return file.getName().toLowerCase().endsWith(".csv");
             }
@@ -29,7 +30,7 @@ public class Main
     }
 
     public static void searchFiles(String queryStr) throws IOException, ParseException {
-        Directory dir = FSDirectory.open(new File(indexPath));
+        Directory dir = FSDirectory.open(new File(Main.class.getResource(indexPath).getPath()));
         IndexSearcher searcher = new IndexSearcher(dir);
         QueryParser queryParser = new QueryParser(Version.LUCENE_30,
                 "contents",
@@ -61,13 +62,6 @@ public class Main
             searchFiles(queryStr);
         }
 
-
-
     }
-
-
-
-
-
 
 }
