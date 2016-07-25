@@ -1,5 +1,5 @@
 function testfunc() {
-    // just an empty function to
+    // empty function to demonstrate module.exports in node
 }
 
 module.exports = {

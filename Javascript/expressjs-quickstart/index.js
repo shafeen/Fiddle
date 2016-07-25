@@ -11,9 +11,18 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// MAIN ROUTES FOR THE APP
+// this is how to use middleware for certain routes only
+app.use('/gettest/', function (req, res, next) {
+    req.middlewaremsg = 'msg set by middleware!';
+    next();
+});
 
+// MAIN ROUTES FOR THE APP
 app.get('/', function (req, res) {
+    res.send('Your expressjs-quickstart app is working!!');
+});
+
+app.get('/gettest/', function (req, res) {
     res.sendFile('index.html', {root: './'});
 });
 
