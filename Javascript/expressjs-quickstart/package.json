@@ -1,0 +1,27 @@
+{
+  "name": "expressjs-quickstart",
+  "version": "0.0.0",
+  "description": "a basic expressjs template to quickstart a project",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "compression": "^1.6.1",
+    "nodemon": "^1.9.2",
+    "bluebird": "^3.3.5",
+    "body-parser": "^1.15.1",
+    "handlebars": "^4.0.5",
+    "jquery": "^2.2.3",
+    "jquery-ui": "^1.10.5",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon -e js,jade,html --watch . index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shafeen M.",
+  "license": "ISC"
+}
