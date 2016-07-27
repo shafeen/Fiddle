@@ -13,9 +13,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // jwt library to creating and verifying tokens
 var jwt = require('jsonwebtoken');
-var jwtSecret = 'shhhhh'; // this secret should be hidden in an ENV variable
 
-// this is how to use middleware for certain routes only
+// use this middleware for certain routes only
+app.use('/jwt/[a-zA-Z]+/', function (req, res, next) {
+    req.jwtSecret = 'shhhhh'; // this secret should be hidden in an ENV variable
+    next();
+});
+
 app.use('/gettest/', function (req, res, next) {
     req.middlewaremsg = 'msg set by middleware!';
     next();
@@ -27,8 +31,12 @@ app.get('/', function (req, res) {
 });
 
 app.get('/jwt/get/', function (req, res) {
-    var jwt = require('jsonwebtoken');
-    var token = jwt.sign({ foo: 'bar' }, jwtSecret);
+    // create a token that expires in 20 seconds
+    var token = jwt.sign({
+        foo: 'bar'
+    }, req.jwtSecret, {
+        expiresIn: 20
+    });
     console.log(token);
     res.json({
         jwt: token
@@ -37,11 +45,17 @@ app.get('/jwt/get/', function (req, res) {
 
 app.get('/jwt/verify/', function (req, res) {
     var token = req.query.token;
-    jwt.verify(token, jwtSecret, function(err, decoded) {
+    jwt.verify(token, req.jwtSecret, function(err, decoded) {
         if (err) {
-            res.send("Invalid token");
+            console.log(err.message);
+            res.send(err.message);
         } else {
-            res.json(decoded);
+            var newToken = jwt.sign({foo: 'bar'}, req.jwtSecret);
+            console.log(newToken);
+            res.json({
+                decodedToken: decoded,
+                newToken: newToken
+            });
         }
     });
 });
