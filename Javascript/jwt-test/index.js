@@ -15,7 +15,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 var jwt = require('jsonwebtoken');
 
 // use this middleware for certain routes only
-app.use('(/jwt/[a-zA-Z]+/)|(/protected/[a-zA-Z0-9]+/)', function (req, res, next) {
+app.use('/jwt/[a-zA-Z]+/', function (req, res, next) {
+    req.jwtSecret = 'password'; // this secret should be hidden in an ENV variable
+    next();
+});
+app.use('/protected/[a-zA-Z0-9]+/', function (req, res, next) {
     req.jwtSecret = 'password'; // this secret should be hidden in an ENV variable
     next();
 });
