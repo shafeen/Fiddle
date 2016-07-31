@@ -69,22 +69,29 @@ app.get('/jwt/verify/', function (req, res) {
     });
 });
 
-app.get('/protected/api/', function (req, res) {
-    var token = req.query.token;
-    jwt.verify(token, req.jwtSecret, function (err, decoded) {
+function verifyToken(req, res, next) {
+    jwt.verify(req.query.token, req.jwtSecret, function (err, decoded) {
         if (err) {
             res.status(401).send(err.message);
         } else {
             // verify the token claims here
             if (decoded.foo == 'bar') {
-                res.json({
-                    refreshedToken: jwt.sign({foo: 'bar'}, req.jwtSecret, {expiresIn: 30}),
-                    message: "Successfully served api endpoint!"
-                });
+                req.jwt = {
+                    oldToken: decoded
+                };
             } else {
                 res.status(401).send('Token has unexpected claims!');
             }
+            next();
         }
+    });
+}
+app.use('/protected/[a-z]+/',  verifyToken);
+
+app.get('/protected/api/', function (req, res) {
+    res.json({
+        refreshedToken: jwt.sign({foo: 'bar'}, req.jwtSecret, {expiresIn: 30}),
+        message: "Successfully served api endpoint!"
     });
 });
 
