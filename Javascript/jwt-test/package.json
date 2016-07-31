@@ -1,20 +1,21 @@
 {
-  "name": "expressjs-quickstart",
+  "name": "jwt-test",
   "version": "0.0.0",
-  "description": "a basic expressjs template to quickstart a project",
+  "description": "a basic project to generate and test jwt tokens",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "express": "^4.13.4",
-    "compression": "^1.6.1",
-    "nodemon": "^1.9.2",
     "bluebird": "^3.3.5",
     "body-parser": "^1.15.1",
+    "compression": "^1.6.1",
+    "express": "^4.13.4",
     "handlebars": "^4.0.5",
     "jquery": "^2.2.3",
     "jquery-ui": "^1.10.5",
+    "jsonwebtoken": "^7.1.6",
+    "nodemon": "^1.9.2",
     "path": "^0.12.7"
   },
   "devDependencies": {},
