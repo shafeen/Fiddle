@@ -1,9 +1,13 @@
 var express = require('express');
+var logger = require('morgan');
 var app = express();
 
 // compress all requests being served
 var compression = require('compression');
 app.use(compression());
+
+// use logger when serving requests
+app.use(logger('dev'));
 
 // using bodyparser for POST body parsing
 // TODO: limit this middleware to only the requests that need it (POSTS)
