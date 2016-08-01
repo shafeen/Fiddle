@@ -5,6 +5,14 @@ var app = express();
 var compression = require('compression');
 app.use(compression());
 
+// have cookies accessible from all incoming requests
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+// add request logging with morgan
+var logger = require('morgan');
+app.use(logger('dev'));
+
 // using bodyparser for POST body parsing
 // TODO: limit this middleware to only the requests that need it
 var bodyParser = require('body-parser');
@@ -19,7 +27,8 @@ app.use('/gettest/', function (req, res, next) {
 
 // MAIN ROUTES FOR THE APP
 app.get('/', function (req, res) {
-    res.send('Your expressjs-quickstart app is working!!');
+    var messagePrefix = req.cookies.name ? 'Hello ' + req.cookies.name + '! ': '';
+    res.send(messagePrefix + 'Your expressjs-quickstart app is working!!');
 });
 
 app.get('/gettest/', function (req, res) {
