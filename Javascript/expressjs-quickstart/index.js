@@ -26,24 +26,10 @@ app.use('/gettest/', function (req, res, next) {
 });
 
 // MAIN ROUTES FOR THE APP
-app.get('/', function (req, res) {
-    var messagePrefix = req.cookies.name ? 'Hello ' + req.cookies.name + '! ': '';
-    res.send(messagePrefix + 'Your expressjs-quickstart app is working!!');
-});
-
-app.get('/gettest/', function (req, res) {
-    res.sendFile('index.html', {root: './'});
-});
-
-app.post('/posttest/', function (req, res) {
-    res.status(200).json({
-        message: 'posttest request successful!'
-    });
-});
+app.use('/', require('./routes'));
 
 // ROUTES TO SERVE STATIC ITEMS (images, scripts, etc)
-app.use('/images/', express.static('./images/'));
-app.use('/scripts/', express.static('./scripts/'));
+app.use(express.static('./public/'));
 
 app.listen(3000, function () {
     console.log('expressjs app listening on port 3000!');

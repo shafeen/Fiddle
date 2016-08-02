@@ -1,12 +1,23 @@
-var route1 = function (req, res) {
-    res.send('this is route1');
-};
+var express  = require('express');
+var router = express.Router();
 
-var route2 = function (req, res) {
-    res.send('this is route2');
-};
+router.get('/', function (req, res) {
+    var messagePrefix = req.cookies.name ? 'Hello ' + req.cookies.name + '! ': '';
+    res.send(messagePrefix + 'Your expressjs-quickstart app is working!!');
+});
 
-module.exports = {
-    route1: route1,
-    route2: route2
-};
+router.get('/getindex/', function (req, res) {
+    res.sendFile('index.html', {root: './'});
+});
+
+router.get('/gettest/', function (req, res) {
+    res.send('this is a test GET route');
+});
+
+router.post('/posttest/', function (req, res) {
+    res.status(200).json({
+        message: 'posttest request successful!'
+    });
+});
+
+module.exports = router;
