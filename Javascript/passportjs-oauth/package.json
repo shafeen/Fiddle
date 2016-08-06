@@ -17,6 +17,7 @@
     "jquery-ui": "^1.10.5",
     "morgan": "^1.7.0",
     "nodemon": "^1.9.2",
+    "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "path": "^0.12.7"
   },
