@@ -4,8 +4,17 @@ var router = express.Router();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-// TODO: THIS IS STILL NON-FUNCTIONAL!!!
 
+router.use('/', passport.initialize());
+
+// TODO: write a better de/serializer?
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
 
 // Use the GoogleStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
@@ -18,9 +27,14 @@ passport.use(new GoogleStrategy({
         callbackURL: "/authenticate/google/callback/"
     },
     function(token, tokenSecret, profile, done) {
-        User.findOrCreate({ googleId: profile.id }, function (err, user) {
-            return done(err, user);
-        });
+        user = {
+            id: profile.id
+        };
+        return done(null, user);
+        // TODO: actually create this function (User.findOrCreate)
+        // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        //     return done(err, user);
+        // });
     }
 ));
 
@@ -53,7 +67,7 @@ router.get('/google/callback/',
 
 // TODO: invoke this route after a successful login
 router.get('/google/success/', function (req, res) {
-    res.send('Successfully logged in with Google!')
+    res.send('Successfully logged in with Google!' )
 });
 
 module.exports = router;
