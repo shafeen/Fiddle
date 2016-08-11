@@ -7,7 +7,11 @@ router.get('/', function (req, res) {
 });
 
 router.get('/getindex/', function (req, res) {
-    res.sendFile('index.html', {root: './'});
+    //res.sendFile('index.html', {root: './'}); // <-- this is one option
+    res.render('index', {
+        pageTitle: req.originalUrl,
+        contentText: 'this is just some body content.'
+    });
 });
 
 router.get('/gettest/', function (req, res) {
