@@ -1,0 +1,16 @@
+extends layout
+
+block bodycontent
+  .container
+    .jumbotron.text-center
+      h1
+        span.fa.fa-lock
+        = ' ' + pageTitle
+
+      p Login or Register with:
+      each loginOption in authOptions
+        a.btn(class='#{loginOption.btn2ndClass}', href='#{loginOption.authUrl}')
+          span.fa(class='#{loginOption.span2ndClass}')
+          = ' '+loginOption.provider
+        br
+

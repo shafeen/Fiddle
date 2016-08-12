@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var app = express();
 
@@ -18,6 +19,10 @@ app.use(logger('dev'));
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // MAIN ROUTES FOR THE APP
 app.use('/', require('./routes'));

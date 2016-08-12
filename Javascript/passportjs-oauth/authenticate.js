@@ -40,7 +40,25 @@ passport.use(new GoogleStrategy({
 
 // TODO: serve the log-in page here
 router.get('/login/', function (req, res) {
-    res.sendFile('index.html', {root: './public'});
+    var authOptions = [
+        {
+            provider: 'Google',
+            authUrl: '/authenticate/google',
+            btn2ndClass: 'btn-danger',
+            span2ndClass: 'fa-google-plus'
+        },
+        {
+            provider: 'facebook',
+            authUrl: '/authenticate/facebook',
+            btn2ndClass: 'btn-primary',
+            span2ndClass: 'fa-facebook'
+        }
+    ];
+
+    res.render('login', {
+        pageTitle: 'Node Authentication',
+        authOptions: authOptions
+    });
 });
 
 // GET /authenticate/google
