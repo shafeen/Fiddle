@@ -19,7 +19,7 @@ block content
     button Send
 
   script(src="http://code.jquery.com/jquery-1.11.1.js")
-  script(src="socket.io/socket.io.js")
+  script(src="/socket.io/socket.io.js")
   script.
     // TODO: refactor out startChat after username entry added in
     function startChat(username, recvr) {
@@ -31,10 +31,12 @@ block content
           recvr: recvr
         };
         socket.emit('chat', msgObj);
+        $('#messages').append($('<li>').html('<b>['+username+']</b> '+$('#m').val()));
         $('#m').val('');
         return false;
       });
       socket.on('chatreply', function (msgObj) {
         console.log("[%s] %s", msgObj.sendr, msgObj.msg);
+        $('#messages').append($('<li>').html('<b>['+msgObj.sendr+']</b> '+msgObj.msg));
       });
     }
