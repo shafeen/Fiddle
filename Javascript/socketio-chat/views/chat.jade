@@ -14,18 +14,36 @@ block headcontent
 
 block content
   ul(id="messages")
-  form(action="")
+
+  form(id="username-form", action="")
+    input(id="username", type="text", placeholder="Choose Username")
+    input(id="recvrname", type="text", placeholder="Choose Receiver")
+    button Enter Chatroom
+
+  form(id="msg-form", action="")
     input(id="m" autocomplete="off")
     button Send
 
   script(src="http://code.jquery.com/jquery-1.11.1.js")
-  script(src="/socket.io/socket.io.js")
+  script(src="socket.io/socket.io.js")
   script.
+    $(document).ready(function () {
+      $('#msg-form').hide();
+
+      $('form#username-form').submit(function () {
+        startChat($('#username').val(), $('#recvrname').val());
+        $('form#username-form').hide();
+        $('form#msg-form').show();
+        return false;
+      });
+    });
+
     // TODO: refactor out startChat after username entry added in
     function startChat(username, recvr) {
       var socket = io();
-      socket.emit('identify', username); // TODO: send a custom user here
-      $('form').submit(function () {
+
+      socket.emit('identify', username);
+      $('form#msg-form').submit(function () {
         var msgObj = {
           msg: $('#m').val(),
           recvr: recvr
@@ -35,6 +53,7 @@ block content
         $('#m').val('');
         return false;
       });
+
       socket.on('chatreply', function (msgObj) {
         console.log("[%s] %s", msgObj.sendr, msgObj.msg);
         $('#messages').append($('<li>').html('<b>['+msgObj.sendr+']</b> '+msgObj.msg));
