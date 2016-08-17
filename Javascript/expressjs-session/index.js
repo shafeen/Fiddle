@@ -30,6 +30,8 @@ app.use('/', require('./routes'));
 
 // SESSION stuff
 
+app.use(require('express-status-monitor')());
+
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
