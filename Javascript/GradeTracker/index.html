@@ -21,5 +21,26 @@
         <label>Worst Possible: <input type="text" ng-model="gradetracker.newClass.worstPossible"/></label><br/>
         <input type="submit" value="Add Class"/>
     </form>
+    <br/>
+
+    <div ng-repeat="item in gradetracker.items">
+        <h4>{{item.name}} ({{item.type}})</h4>
+        <p>Weight: {{item.weight}}%</p>
+        <p>Score: {{item.achieved*100/item.maximum}}%</p>
+    </div>
+
+    <br/>
+    <form ng-submit="gradetracker.addNewItem()">
+        <h3>Add new Item</h3>
+        <label>Type: <input type="text" ng-model="gradetracker.newItem.type"/></label><br/>
+        <label>Name: <input type="text" ng-model="gradetracker.newItem.name"/></label><br/>
+        <label>Item weight: <input type="number" ng-model="gradetracker.newItem.weight" />%</label><br/>
+        <div>
+            Scores:
+            <input type="number" placeholder="Achieved" ng-model="gradetracker.newItem.achieved"/> /
+            <input type="number" placeholder="Maximum" ng-model="gradetracker.newItem.maximum"/>
+        </div>
+        <input type="submit" value="Add Item"/>
+    </form>
 </body>
 </html>
