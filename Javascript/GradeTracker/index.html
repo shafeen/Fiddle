@@ -1,0 +1,25 @@
+<!doctype html>
+<html ng-app="gradetrackerApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <title>GradeTracker</title>
+    <script src="gradetracker.js"></script>
+</head>
+<body ng-controller="GradeTrackerCtrl as gradetracker">
+    Total classes: {{gradetracker.grades.length}}
+    <div ng-repeat="grade in gradetracker.grades">
+        <h3>{{grade.name}}</h3>
+        <p>Current Grade: <b>{{grade.grade}}</b></p>
+        <p>Best Possible Grade: <b>{{grade.bestPossible}}</b></p>
+        <p>Worst Possible Grade: <b>{{grade.worstPossible}}</b></p>
+    </div>
+    <form ng-submit="gradetracker.addNewClass()">
+        <h3>Add new class</h3>
+        <label>Name: <input type="text" ng-model="gradetracker.newClass.name"/></label><br/>
+        <label>Grade: <input type="text" ng-model="gradetracker.newClass.grade"/></label><br/>
+        <label>Best Possible: <input type="text" ng-model="gradetracker.newClass.bestPossible"/></label><br/>
+        <label>Worst Possible: <input type="text" ng-model="gradetracker.newClass.worstPossible"/></label><br/>
+        <input type="submit" value="Add Class"/>
+    </form>
+</body>
+</html>
