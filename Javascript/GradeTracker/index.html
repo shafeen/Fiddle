@@ -1,6 +1,8 @@
 <!doctype html>
 <html ng-app="gradetrackerApp">
 <head>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
     <title>GradeTracker</title>
     <script src="gradetracker.js"></script>
@@ -15,10 +17,10 @@
     </div>
     <form ng-submit="gradetracker.addNewClass()">
         <h3>Add new class</h3>
-        <label>Name: <input type="text" ng-model="gradetracker.newClass.name"/></label><br/>
-        <label>Grade: <input type="text" ng-model="gradetracker.newClass.grade"/></label><br/>
-        <label>Best Possible: <input type="text" ng-model="gradetracker.newClass.bestPossible"/></label><br/>
-        <label>Worst Possible: <input type="text" ng-model="gradetracker.newClass.worstPossible"/></label><br/>
+        <label>Name: <input type="text" ng-model="gradetracker.newClass.name" required/></label><br/>
+        <label>Grade: <input type="text" ng-model="gradetracker.newClass.grade" required/></label><br/>
+        <label>Best Possible: <input type="text" ng-model="gradetracker.newClass.bestPossible" required/></label><br/>
+        <label>Worst Possible: <input type="text" ng-model="gradetracker.newClass.worstPossible" required/></label><br/>
         <input type="submit" value="Add Class"/>
     </form>
     <br/>
@@ -32,13 +34,13 @@
     <br/>
     <form ng-submit="gradetracker.addNewItem()">
         <h3>Add new Item</h3>
-        <label>Type: <input type="text" ng-model="gradetracker.newItem.type"/></label><br/>
-        <label>Name: <input type="text" ng-model="gradetracker.newItem.name"/></label><br/>
-        <label>Item weight: <input type="number" ng-model="gradetracker.newItem.weight" />%</label><br/>
+        <label>Type: <input type="text" ng-model="gradetracker.newItem.type" required/></label><br/>
+        <label>Name: <input type="text" ng-model="gradetracker.newItem.name" required/></label><br/>
+        <label>Item weight: <input type="number" ng-model="gradetracker.newItem.weight" required/>%</label><br/>
         <div>
             Scores:
-            <input type="number" placeholder="Achieved" ng-model="gradetracker.newItem.achieved"/> /
-            <input type="number" placeholder="Maximum" ng-model="gradetracker.newItem.maximum"/>
+            <input type="number" placeholder="Achieved" ng-model="gradetracker.newItem.achieved" required/> /
+            <input type="number" placeholder="Maximum" ng-model="gradetracker.newItem.maximum" required/>
         </div>
         <input type="submit" value="Add Item"/>
     </form>
