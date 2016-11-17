@@ -1,1 +1,1 @@
-exports.url = 'mongodb://localhost/test';
+exports.url = 'mongodb://192.168.0.28/test';

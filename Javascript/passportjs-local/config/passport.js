@@ -13,12 +13,12 @@ module.exports(function (passport) {
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
-        })
+        });
     });
 
-    // local signup strategy
+    // local-signup strategy
     // ---------------------
-    // if the strategies weren't named, it would default to "local"
+    // if the strategies weren't named, they would default to "local"
     passport.use('local-signup', new LocalStrategy({
             // local strategy uses username and password by default
             // -> override with email and password
@@ -27,9 +27,31 @@ module.exports(function (passport) {
             passReqToCallback: true
         },
         function(req, email, password, done) {
-            // TODO: complete the rest to configure passportJS
+            // asynchronous
+            process.nextTick(function () {
+                User.findOne({'local.email', email}, function (err, user) {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    if (user) {
+                        return done(null, false, req.flash('signupMessage', 'Email already taken!'));
+                    } else {
+                        var newUser = new User();
+                        newUser.local.email = email;
+                        newUser.local.password = newUser.generateHash(password);
+                        newUser.save(function (err) {
+                            if (err) {
+                                throw err;
+                            }
+                            return done(null, newUser);
+                        });
+                    }
+                });
+            });
         }
     ));
 
+    // TODO: complete the rest to configure passportJS
 
 });
