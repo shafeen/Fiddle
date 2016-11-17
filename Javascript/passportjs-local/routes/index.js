@@ -9,7 +9,13 @@ router.get('/', function(req, res, next) {
 module.exports = function(passport) {
     router.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/profile',
-        failureRedirect: 'signup',
+        failureRedirect: '/signup',
+        failureFlash: true
+    }));
+
+    router.post('login', passport.authenticate('local-login', {
+        successRedirect: '/profile',
+        failureRedirect: '/login',
         failureFlash: true
     }));
 
