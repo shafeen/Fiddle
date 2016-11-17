@@ -2,7 +2,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user.model');
 
-module.exports(function (passport) {
+module.exports = function (passport) {
 
     // passport session setup
     // ----------------------
@@ -28,7 +28,7 @@ module.exports(function (passport) {
         function(req, email, password, done) {
             // asynchronous
             process.nextTick(function () {
-                User.findOne({'local.email', email}, function (err, user) {
+                User.findOne({'local.email': email}, function (err, user) {
                     if (err) {
                         return done(err);
                     }
@@ -59,7 +59,7 @@ module.exports(function (passport) {
             passReqToCallback: true
         },
         function(req, email, password, done) {
-            User.findOne({'local.email', email}, function (err, user) {
+            User.findOne({'local.email': email}, function (err, user) {
                 if (err) {
                     return done(err);
                 }
@@ -75,4 +75,4 @@ module.exports(function (passport) {
         }
     ));
 
-});
+};
