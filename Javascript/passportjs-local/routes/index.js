@@ -13,7 +13,7 @@ module.exports = function(passport) {
         failureFlash: true
     }));
 
-    router.post('login', passport.authenticate('local-login', {
+    router.post('/login', passport.authenticate('local-login', {
         successRedirect: '/profile',
         failureRedirect: '/login',
         failureFlash: true
