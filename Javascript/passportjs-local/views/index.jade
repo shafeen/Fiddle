@@ -12,10 +12,10 @@ block content
           h2.text-success= successMsg
         else
           form(action='/login', method='POST')
-            if error == true
+            if loginMsg != undefined && loginMsg.length > 0
               div.panel.panel-danger
                 div.panel-body
-                  div.text-danger Incorrect Email/Password, please try again!
+                  div.text-danger= loginMsg
 
             div.form-group
               label Email

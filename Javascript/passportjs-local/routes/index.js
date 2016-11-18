@@ -6,11 +6,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-    res.render('index', { title: 'Welcome Users' });
+    res.render('index', { title: 'Welcome Users', loginMsg: req.flash('loginMessage') });
 });
 
 router.get('/signup', function (req, res) {
-    res.render('signup', {title: 'New User'});
+    res.render('signup', {title: 'New User', signupMsg: req.flash('signupMessage')});
 });
 
 router.get('/profile', function (req, res) {

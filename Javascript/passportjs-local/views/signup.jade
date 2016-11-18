@@ -12,6 +12,11 @@ block content
           h2.text-success= successMsg
         else
           form(action='/signup', method='POST')
+            if signupMsg != undefined && signupMsg.length > 0
+              div.panel.panel-danger
+                div.panel-body
+                  div.text-danger= signupMsg
+
             div.form-group
               label Email
               input.form-control(type='email', name='email', placeholder='email')
