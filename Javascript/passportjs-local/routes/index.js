@@ -1,9 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Welcome Users' });
+});
+
+router.get('/login', function(req, res, next) {
+    res.render('index', { title: 'Welcome Users' });
+});
+
+router.get('/signup', function (req, res) {
+    res.render('signup', {title: 'New User'});
+});
+
+router.get('/profile', function (req, res) {
+    // TODO: update this route to a better profile page
+    res.render('index', {title: 'Success', successMsg: 'Welcome to your profile!'});
 });
 
 module.exports = function(passport) {

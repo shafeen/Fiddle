@@ -11,17 +11,11 @@ block content
         if successMsg != undefined
           h2.text-success= successMsg
         else
-          form(action='/login', method='POST')
-            if error == true
-              div.panel.panel-danger
-                div.panel-body
-                  div.text-danger Incorrect Email/Password, please try again!
-
+          form(action='/signup', method='POST')
             div.form-group
               label Email
               input.form-control(type='email', name='email', placeholder='email')
             div.form-group
               label Password
               input.form-control(type='password', name='password', placeholder='password')
-            button.btn.btn-primary(type='submit') Log In
-            a.btn.btn-success(href='/signup') Sign Up
+            button.btn.btn-primary(type='submit') Sign up
