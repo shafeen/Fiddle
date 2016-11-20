@@ -1,12 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Welcome Users' });
+router.get('/', function(req, res) {
+    if(req.isAuthenticated()) {
+        res.redirect('/profile');
+    } else {
+        res.render('index', { title: 'Welcome Users' });
+    }
 });
 
-router.get('/login', function(req, res, next) {
-    res.render('index', { title: 'Welcome Users', loginMsg: req.flash('loginMessage') });
+router.get('/login', function(req, res) {
+    if (req.isAuthenticated()) {
+        res.redirect('/profile');
+    } else {
+        res.render('index', { title: 'Welcome Users', loginMsg: req.flash('loginMessage') });
+    }
 });
 
 router.get('/signup', function (req, res) {
@@ -16,7 +24,7 @@ router.get('/signup', function (req, res) {
 //we want this protected so you have to be logged in to visit
 router.get('/profile', isLoggedIn, function (req, res) {
     // TODO: update this route to a better profile page
-    res.render('index', {title: 'Success', successMsg: 'Welcome to your profile!'});
+    res.render('index', {title: 'Success', successMsg: 'Welcome to your profile!', user: req.user});
 });
 
 router.get('/logout', function (req, res) {
