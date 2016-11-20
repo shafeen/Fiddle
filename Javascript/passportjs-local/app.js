@@ -12,7 +12,10 @@ var flash = require('express-flash');
 
 // connect to the database
 var configDB = require('./config/database.js');
-mongoose.connect(configDB.url);
+mongoose.connect(configDB.url, function(err) {
+    console.log("mongoose connection failed! Using backup connection.");
+    mongoose.connect(configDB.backupUrl);
+});
 
 // configure passportjs
 var passportConfig = require('./config/passport.js');
