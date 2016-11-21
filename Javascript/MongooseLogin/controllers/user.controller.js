@@ -16,6 +16,10 @@ exports.createTestUser = function () {
     testUser.save();
 };
 
+exports.verifyUser = function (email, password) {
+    return User.find({ email: email, password: password }).exec();
+};
+
 exports.verifyAndLoginUser = function (email, password, res) {
     User.find({ email: email, password: password }, function (err, results) {
         if (err) {
