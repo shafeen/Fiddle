@@ -5,13 +5,19 @@ var userController = require('../controllers/user.controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    //userController.createTestUser();
     res.render('index', { title: 'MongooseLogin', error: false});
+});
+
+router.get('/createTestUser', function (req, res) {
+    userController.createTestUser();
+    res.status(200).json({
+        message: "Successfully created user!"
+    });
 });
 
 /* login endpoint */
 router.post('/', function(req, res, next) {
-    userController.verifyUser(req.body.email, req.body.password)
+    userController.findUser(req.body.email, req.body.password)
     .then(function(results) {
         console.log(results);
         if (results.length == 0) {

@@ -10,27 +10,12 @@ exports.createUser = function (email, password) {
 
 exports.createTestUser = function () {
     var testUser = new User({
-        email: 'testUser@example.com',
-        password: 'test1234'
+        email: 'user@example.com',
+        password: 'password'
     });
     testUser.save();
 };
 
-exports.verifyUser = function (email, password) {
+exports.findUser = function (email, password) {
     return User.find({ email: email, password: password }).exec();
-};
-
-exports.verifyAndLoginUser = function (email, password, res) {
-    User.find({ email: email, password: password }, function (err, results) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(results);
-            if (results.length == 0) {
-                res.render('index', { title: 'MongooseLogin', error: true});
-            } else {
-                res.render('index', { title: 'MongooseLogin', successMsg: 'Logged in successfully!'});
-            }
-        }
-    });
 };
