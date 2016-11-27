@@ -23,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // setup the mongodb connection
+mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/test');
 
 app.use('/', routes);
