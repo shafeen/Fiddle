@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="emailTestApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+  <meta charset="UTF-8">
+  <title>Email Test</title>
+  <script type="text/javascript">
+    angular.module('emailTestApp', [])
+        .controller('EmailCtrl', function() {
+          var email = this;
+          email.model = {
+              text: 'user@email.com'
+          };
+        });
+  </script>
+
+  <style>
+    .done-true {
+      text-decoration: line-through;
+      color: grey;
+    }
+  </style>
+</head>
+<body>
+<div ng-controller="EmailCtrl as email">
+    <form name="email.someForm">
+        <input type="email" name="email" ng-model="email.model.text" placeholder="Email" required>
+    </form>
+    <div>Email valid: {{email.someForm.email.$valid}}</div>
+    <div>Text: {{email.model.text}}</div>
+</body>
