@@ -3,7 +3,6 @@ var router = express.Router();
 var Sequelize = require('sequelize');
 
 var sequelize = new Sequelize({
-    host: 'localhost',
     dialect: 'sqlite',
     pool: {
         max: 5,
@@ -37,14 +36,19 @@ router.get('/test/sqlite/', function(req, res, next) {
     Address.hasMany(User, {as: 'occupant'});
 
     sequelize.sync().then(function() {
-
+        return Address.create({
+            address: '1 Infinite Loop, Cupertino CA'
+        });
+    }).then(function(address) {
+        console.log(address.get({ plain: true }));
         return User.create({
             username: 'johndoe',
-            birthday: new Date(1980, 6, 20)
-        });
-    }).then(function(jane) {
-        console.log(jane.username);
-        console.log(jane.birthday);
+            birthday: new Date(1980, 6, 20),
+            addressId: address.id
+        })
+    }).then(function (user) {
+        console.log(user.get({ plain: true }));
+        res.json(user);
     });
 });
 
