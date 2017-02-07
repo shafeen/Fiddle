@@ -12,6 +12,9 @@ var sequelize = new Sequelize({
     storage: './db.sqlite3'
 });
 
+var User = require('../models/user.model')(sequelize);
+var Address = require('../models/address.model')(sequelize);
+
 sequelize.authenticate().then(function(err) {
     console.log('Connection has been established successfully.');
 }).catch(function (err) {
@@ -23,18 +26,13 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
-router.get('/test/sqlite/', function(req, res, next) {
-    var User = sequelize.define('user', {
-        username: Sequelize.STRING,
-        birthday: Sequelize.DATE
+router.get('/test/sqlite/define/', function(req, res) {
+    sequelize.sync().then(function () {
+        res.send("sync complete");
     });
+});
 
-    var Address = sequelize.define('address', {
-        address: Sequelize.STRING
-    });
-
-    Address.hasMany(User, {as: 'occupant'});
-
+router.get('/test/sqlite/create/address', function(req, res, next) {
     sequelize.sync().then(function() {
         return Address.create({
             address: '1 Infinite Loop, Cupertino CA'
@@ -51,5 +49,42 @@ router.get('/test/sqlite/', function(req, res, next) {
         res.json(user);
     });
 });
+
+router.get('/test/sqlite/find/user/:name', function(req, res) {
+    var User = sequelize.define('user', {
+        username: Sequelize.STRING,
+        birthday: Sequelize.DATE
+    });
+    User.findOne({
+        attributes: ['username', 'birthday'],
+        where: {
+            username: req.params.name
+        }
+    }).then(function (user) {
+        if (user) {
+            console.log("found a user: %s", user.get({plain: true}));
+        }
+        res.json(user);
+    });
+});
+
+router.get('/test/sqlite/find/address/:id', function(req, res) {
+    var Address = sequelize.define('address', {
+        address: Sequelize.STRING
+    });
+
+    Address.findOne({
+        attributes: ['id', 'address'],
+        where: {
+            id: req.params.id
+        }
+    }).then(function (address) {
+        if (address) {
+            console.log("found an address: %s", address.get({plain: true}));
+        }
+        res.json(address);
+    });
+});
+
 
 module.exports = router;
