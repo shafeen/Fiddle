@@ -1,0 +1,10 @@
+<div>
+    <h3> {{$ctrl.title}} </h3>
+    <div> Cost: {{$ctrl.cost}} </div>
+    <div class="traits">
+        <label ng-repeat="trait in $ctrl.traits"><i>{{trait}}</i> </label>
+    </div>
+    <ng-transclude>
+        this is the card description
+    </ng-transclude>
+</div>

@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  script(src='/angular/single-card.component.js')
+  //script(src='/angular/card-grid.component.js')
+    
+  h1= title
+  p Welcome to #{title}
+  
+  .cards(ng-app='cardApp') 
+    h3 card components go here
+    single-card(title="card 1", cost=2)
+    
