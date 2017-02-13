@@ -1,0 +1,11 @@
+<div>
+    <img ng-src="{{$ctrl.imgUrl}}" height="200"/>
+    <h3> {{$ctrl.title}} </h3>
+    <div> Cost: {{$ctrl.cost}} </div>
+    <div class="traits">
+        Traits: <label ng-repeat="trait in $ctrl.traits"><i>{{trait}}</i> </label>
+    </div>
+    <ng-transclude>
+        {{$ctrl.description}}
+    </ng-transclude>
+</div>
