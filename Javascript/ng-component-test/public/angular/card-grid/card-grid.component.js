@@ -1,5 +1,5 @@
 (function() {
-    let app = angular.module('cardApp', []);
+    let app = angular.module('cardApp');
 
     function CardGridCtrl() {
         let ctrl = this;

@@ -2,9 +2,8 @@ extends layout
 
 block content
   
+  script(src='/angular/cardApp.config.js')
   script(src='/angular/single-card/single-card.component.js')
-  
-  // including card-grid stops single-card from working for whatever reason
   script(src='/angular/card-grid/card-grid.component.js')
     
     
@@ -15,11 +14,4 @@ block content
     hr
     
     card-grid
-    
-    //single-card(cost='2', img-url="http://s3.amazonaws.com/conquestdb2/image/card/en/12-wotc/094-reclusiam-templars.jpg")
-    
-    single-card(cost="5", title="The Emperor's Champion", 
-      img-url="http://s3.amazonaws.com/conquestdb2/image/card/en/12-wotc/095-the-emperors-champion.jpg"
-      traits="['1','2','3']"
-      ) 
     

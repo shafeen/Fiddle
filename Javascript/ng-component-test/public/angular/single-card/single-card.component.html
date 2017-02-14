@@ -5,7 +5,8 @@
     <div class="traits">
         Traits: <label ng-repeat="trait in $ctrl.traits"><i>{{trait}}</i> </label>
     </div>
+    {{$ctrl.description}}
     <ng-transclude>
-        {{$ctrl.description}}
+        <hr/>
     </ng-transclude>
 </div>
