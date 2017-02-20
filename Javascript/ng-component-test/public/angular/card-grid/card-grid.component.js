@@ -1,7 +1,7 @@
 (function() {
     let app = angular.module('cardApp');
 
-    function CardGridCtrl() {
+    function CardGridCtrl($http) {
         let ctrl = this;
         
         // This data would normally be retrieved via a service
@@ -27,7 +27,18 @@
                 }
             ];
             console.log('Card grid initialized with cards: ', ctrl.cards);
-
+            
+            ctrl.refreshData = function () {
+                console.log("Clicked the refresh button!");
+                $http.get('/cards/refresh').then(
+                    function success(response) {
+                        ctrl.cards = response.data;
+                    },
+                    function failure(response) {
+                        console.error("Could not retrieve cards from the specified url!");
+                    }
+                );
+            };
         };
     }
     
