@@ -32,7 +32,6 @@ class Heap {
             return null;
         }
     }
-    
  
     _siftUp(index) {
         let parentIndex = this._getParentIndex(index);
