@@ -1,4 +1,5 @@
-let assert = require('assert');
+let chai = require('chai');
+let assert = chai.assert;
 let Heap = require('../Heap');
 describe('Heap', function() {
     describe('#size()', function() {
