@@ -32,6 +32,10 @@ class Heap {
             return null;
         }
     }
+
+    size() {
+        return this.internalArray.length;
+    }
  
     _siftUp(index) {
         let parentIndex = this._getParentIndex(index);
