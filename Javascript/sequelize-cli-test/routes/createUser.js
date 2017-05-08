@@ -22,7 +22,6 @@ function createUser(inquirer, sequelize) {
         })
     }).then(function (existingUser) {
         if (existingUser) {
-            console.log('a user with that email already exists!');
             return null;
         } else {
             return User.create({
