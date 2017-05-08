@@ -12,22 +12,6 @@ let sequelize = new Sequelize({
     storage: './db.sqlite3'
 });
 
-let usernamePrompt = {
-    type: 'input',
-    name: 'username',
-    message: 'Username:'
-};
-let passwordPrompt = {
-    type: 'password',
-    name: 'password',
-    message: 'Password:',
-    mask: '*'
-};
-
-// inquirer.prompt([usernamePrompt, passwordPrompt]).then((answers) => {
-//     console.log(answers);
-// });
-
 let dbSetup = require('./config/dbSetup');
 dbSetup(sequelize);
 
