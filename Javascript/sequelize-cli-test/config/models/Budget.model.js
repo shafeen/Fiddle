@@ -1,10 +1,10 @@
 let Sequelize = require('sequelize');
 
-module.exports = function(sequelize, User) {
+module.exports = function(sequelize) {
     let Budget = sequelize.define('budget', {
+        name: Sequelize.STRING,
         type: Sequelize.STRING,
         amount: Sequelize.INTEGER
     });
-    Budget.hasMany(User);
     return Budget;
 };
