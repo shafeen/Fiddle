@@ -2,7 +2,10 @@ let dbSetup = require('../config/dbSetup');
 
 function createBudget (inquirer, sequelize) {
     let User = require('../config/models/User.model')(sequelize);
-    let Budget = require('../config/models/Budget.model')(sequelize, User);
+    let Budget = require('../config/models/Budget.model')(sequelize);
+    // TODO: should need to NOT do this manually every time
+    Budget.belongsToMany(User, {through: 'UserBudgets'});
+    User.belongsToMany(Budget, {through: 'UserBudgets'});
 
     // inquire about what user we want to create a budget for
     // retrieve the list of users currently in the system and display their names for selection
@@ -32,7 +35,9 @@ function createBudget (inquirer, sequelize) {
                 type: 'weekly',
                 amount: 10
             }).then(function(budget) {
-                return budget.setUsers([answers.userSelected]);
+                // we've elected not to care that this is asynchronous
+                budget.setUsers([answers.userSelected]);
+                return budget;
             })
         });
     }).catch(function(reason) {

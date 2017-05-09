@@ -9,6 +9,7 @@ let sequelize = new Sequelize({
         min: 0,
         idle: 10000
     },
+    logging: false,
     storage: './db.sqlite3'
 });
 
@@ -43,7 +44,7 @@ function doMenuPrompt() {
             ]
         }
     ]).then(function (answers) {
-        console.log(answers);
+        //console.log(answers);
         switch (answers.mainMenuAction) {
             case 'createuser':
                 console.log('creating a new user...');
