@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 
 API_ENDPOINT = 'https://www.alphavantage.co/query'
-API_KEY = os.environ['apikey']
+API_KEY = os.environ['alphavantage_apikey']
 
 def get_last_week_closing_prices(symbol):
 
