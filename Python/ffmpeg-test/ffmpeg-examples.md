@@ -1,4 +1,27 @@
-# ffmpeg examples
+# ffmpeg notes & examples
+
+Useful functions worthy of an article:
+
+- Split videos into clips (using seek and trim)
+
+- join multiple video files
+
+- modify a video:
+
+  - convert between video formats (including changing output frame rates)
+  - resize a video
+  - rotate a video
+  - remove audio from a video
+
+- extract from video:
+
+  - extract audio from a video
+  - extract images from a video (or convert video to images)
+  - create gifs from a video
+
+  
+
+---
 
 
 
