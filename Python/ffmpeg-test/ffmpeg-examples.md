@@ -236,3 +236,27 @@ For changing the speed of audio, use the atempo audio filter. This command will 
 ```bash
 ffmpeg -i input.mkv -filter:a "atempo=2.0" -vn output.mkv
 ```
+
+#### Fading in/out videos
+
+##### Fade
+
+First you need to create an image for your fades. Probably a single *.png image, full white or full black depending on your taste. In the same resolution your video was recorded, preferably.
+```bash
+ffmpeg -r 1/2 -i black.png -c:v libx264 -r 50 -y -pix_fmt yuv420p fade2s.mkv
+```
+This means, fade 2 seconds (-r input:1 / 2 x 50 frames per second = 100 fps). For the image info you can check The Gimp or ImageMagick. Now you've got your fade effect.
+
+##### Fade In:
+
+```bash
+ffmpeg -i fade2s.mkv -y -vf fade=in:0:50 fade_in.mkv
+```
+
+Fade in from 0 to 50 frames (1 second - 50fps)
+
+##### Fade In + Out: 
+Take the last input as your fade in and add some fade out
+```bash
+ffmpeg -i fade_in.mkv -y -vf fade=out:120:50 fade_in_out.mkv
+```
