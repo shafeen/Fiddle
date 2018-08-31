@@ -27,14 +27,36 @@ app.use(bodyParser.urlencoded({extended: true}));
 //   resave: false,
 //   saveUninitialized: true
 // }));
-app.use(session({
+let sessionStore = new RedisStore({
+    host: 'localhost', port: 6379, ttl: 60 * 15
+});
+const sessionMiddleware = session({
     store: new RedisStore({
         host: 'localhost', port: 6379, ttl: 60*15
     }),
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true
-}));
+});
+const sessionInitWithRetry = function (req, res, next) {
+    let tries = 3;
+    function lookupSession(error) {
+        if (error) {
+            return next(error);
+        }
+        tries -= 1;
+        if (req.session !== undefined) {
+            return next()
+        }
+        if (tries < 0) {
+            return next(new Error('Oh no! Unable to initialize your session store'))
+        }
+        sessionMiddleware(req, res, lookupSession)
+    }
+    lookupSession()
+};
+// app.use(sessionMiddleware);
+app.use(sessionInitWithRetry);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
