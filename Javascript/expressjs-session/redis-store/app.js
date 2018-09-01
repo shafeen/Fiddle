@@ -3,8 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session');
-var RedisStore = require('connect-redis')(session);
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -22,41 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true
-// }));
-let sessionStore = new RedisStore({
-    host: 'localhost', port: 6379, ttl: 60 * 15
-});
-const sessionMiddleware = session({
-    store: new RedisStore({
-        host: 'localhost', port: 6379, ttl: 60*15
-    }),
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true
-});
-const sessionInitWithRetry = function (req, res, next) {
-    let tries = 3;
-    function lookupSession(error) {
-        if (error) {
-            return next(error);
-        }
-        tries -= 1;
-        if (req.session !== undefined) {
-            return next()
-        }
-        if (tries < 0) {
-            return next(new Error('Oh no! Unable to initialize your session store'))
-        }
-        sessionMiddleware(req, res, lookupSession)
-    }
-    lookupSession()
-};
-// app.use(sessionMiddleware);
-app.use(sessionInitWithRetry);
+app.use(require('./config/sessionMiddleware')(process.env.SESSION_STORE));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
