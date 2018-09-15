@@ -1,31 +1,28 @@
-var ApolloBoost = require('apollo-boost');
-console.log(ApolloBoost);
-const ApolloClient = ApolloBoost.default;
+(function () {
+    const ApolloBoost = require('apollo-boost');
+    console.log(ApolloBoost);
+    const ApolloClient = ApolloBoost.default;
+    window.apolloClient = new ApolloClient();
+    window.gql =  ApolloBoost.gql;
 
-const client = new ApolloClient();
+    function runQuery(client) {
+        const gql = ApolloBoost.gql;
 
-window.client = client;
-
-function testFunction() {
-    console.log('this is just a test javascript function');
-}
-testFunction();
-
-function runQuery(client) {
-    const gql = ApolloBoost.gql;
-
-    client.query({
-        query: gql`
-            query AllBooks {
-                books {
-                    author
-                    title
+        client.query({
+            query: gql`
+                query AllBooks {
+                    books {
+                        author
+                        title
+                    }
                 }
-            }
-        `
-    })
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-}
+            `
+        })
+        .then(response => console.log(response.data))
+        .catch(error => console.error(error));
+    }
 
-runQuery(client);
+    console.log('loading the apollo client');
+    runQuery(window.apolloClient);
+})();
+
