@@ -25,6 +25,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-tap": "^1.0.1",
     "gulp-uglify": "^3.0.1",
+    "gulp-uglify-es": "^1.0.4",
     "gulplog": "^1.0.0",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
