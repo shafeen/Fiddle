@@ -10,10 +10,15 @@
 
         client.query({
             query: gql`
-                query AllBooks {
+                query AllBooksAndAuthors {
                     books {
-                        author
                         title
+                        author {
+                            name
+                        }
+                    }
+                    authors {
+                        name
                     }
                 }
             `
